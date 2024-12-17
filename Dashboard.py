@@ -82,7 +82,8 @@ elif tab == "Correlation Graph":
 # 4. Anomaly Detection
 elif tab == "Anomaly Detection":
     st.subheader("Anomaly Detection with Autoencoders")
-    threshold = st.slider("Select Reconstruction Error Threshold Percentile", 95, 99, 99)
+    threshold = st.slider("Select Reconstruction Error Threshold Percentile", 
+                      min_value=50, max_value=100, value=99, step=1)
 
     autoencoder = build_autoencoder(X_scaled)
     history = autoencoder.fit(X_scaled, X_scaled, epochs=10, batch_size=32, verbose=0)
