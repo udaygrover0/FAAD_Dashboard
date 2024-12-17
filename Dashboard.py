@@ -33,7 +33,7 @@ def build_autoencoder(X_scaled, encoding_dim=10):
     return autoencoder
 
 # Initialize
-st.title("Interactive EDA Dashboard")
+st.title("Exploratory analysis of dataset")
 st.sidebar.header("Select Options")
 df = load_data()
 X_scaled, features = preprocess_data(df)
@@ -41,8 +41,7 @@ X_scaled, features = preprocess_data(df)
 # Dropdown Toggles
 tab = st.sidebar.radio("Select Analysis Type", [
     "Class Distribution", 
-    "Feature Distribution", 
-    "Correlation Graph", 
+    "Feature Distribution",
     "Anomaly Detection", 
     "Feature Importance",
     "Correlation Heatmap"
@@ -65,21 +64,8 @@ elif tab == "Feature Distribution":
     plt.title(f"Distribution of {feature}")
     st.pyplot(fig)
 
-# 3. Correlation Graph
-elif tab == "Correlation Graph":
-    st.subheader("Correlation Between Two Features")
-    feature1 = st.sidebar.selectbox("Select Feature 1", features)
-    feature2 = st.sidebar.selectbox("Select Feature 2", features)
-    fig, ax = plt.subplots()
-    sns.scatterplot(x=df[feature1], y=df[feature2], hue=df['class'], palette="viridis", ax=ax)
-    plt.title(f"Scatter Plot between {feature1} and {feature2}")
-    st.pyplot(fig)
 
-    # Display Correlation Coefficient
-    correlation = np.corrcoef(df[feature1], df[feature2])[0, 1]
-    st.write(f"Correlation Coefficient: {correlation:.2f}")
-
-# 4. Anomaly Detection
+# 3. Anomaly Detection
 elif tab == "Anomaly Detection":
     st.subheader("Anomaly Detection with Autoencoders")
     threshold = st.slider("Select Reconstruction Error Threshold Percentile", 
@@ -101,9 +87,9 @@ elif tab == "Anomaly Detection":
     st.write(f"Threshold: {threshold_value:.4f}")
     st.write(f"Number of anomalies: {(reconstruction_errors > threshold_value).sum()}")
 
-# 5. Feature Importance
+# 4. Feature Importance
 elif tab == "Feature Importance":
-    st.subheader("Feature Importance")
+    st.subheader("Feature Importance using Random Forest Classification")
     X = df[features]
     y = df['class']
     model = RandomForestClassifier()
@@ -115,7 +101,7 @@ elif tab == "Feature Importance":
     plt.title("Top Feature Importances")
     st.pyplot(fig)
 
-# 6. Pairwise Correlation Heatmap
+# 5. Pairwise Correlation Heatmap
 elif tab == "Correlation Heatmap":
     st.subheader("Correlation Heatmap")
     selected_features = st.multiselect("Select Features for Correlation", features, default=features[:10])
@@ -126,4 +112,4 @@ elif tab == "Correlation Heatmap":
     st.pyplot(fig)
 
 # Footer
-st.write("**Dashboard built with Streamlit**")
+st.write("**Dashboard built by Uday Grover**")
