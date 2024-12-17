@@ -111,5 +111,4 @@ elif tab == "Correlation Heatmap":
     plt.title("Correlation Heatmap")
     st.pyplot(fig)
 
-# Footer
-st.write("**Dashboard built by Uday Grover**")
+
